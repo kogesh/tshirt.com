@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <title>Customizable T-Shirt Shop</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f3f6;
+        }
+        header {
+            background-color: #16c458;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        header .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        header .search-bar {
+            flex: 1;
+            margin: 0 20px;
+            display: flex;
+        }
+        header .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            outline: none;
+            border: 2px solid #ff9f00;
+        }
+        header .search-bar button {
+            padding: 10px 20px;
+            background-color: #ff9f00;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+        header .icons {
+            display: flex;
+            gap: 20px;
+        }
+        header .icons span {
+            font-size: 20px;
+            cursor: pointer;
+        }
+        nav {
+            background-color: #a0b8d1;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        nav a:hover {
+            background-color: #003d80;
+            text-decoration: none;
+        }
+        nav a.active {
+            background-color: #002a5c;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background-color: #f1f3f6;
+        }
+        .product {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product h3 {
+            font-size: 16px;
+            margin: 10px;
+            color: #333;
+        }
+        .product p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 10px 10px;
+        }
+        .product .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2874f0;
+            margin: 0 10px;
+        }
+        .product .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+        }
+        .product .quantity-controls button {
+            background-color: #2874f0;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .product .quantity-controls button:hover {
+            background-color: #0056b3;
+        }
+        .product .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+        .product button.add-to-cart {
+            margin: 10px;
+            padding: 10px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: calc(100% - 20px);
+        }
+        .product button.add-to-cart:hover {
+            background-color: #e91e63;
+        }
+        .size-guide {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .size-guide img {
+            max-width: 80%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        footer {
+            background-color: #2874f0;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        footer a {
+            color: #ff9f00;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .modal-content h3 {
+            margin: 10px 0;
+        }
+        .modal-content p {
+            color: #555;
+        }
+        .close-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .close-btn:hover {
+            background-color: #0056b3;
+        }
+        /* Dropdown styling */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            background-color: #0056b3;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #003d80;
+        }
+        .product-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 20px;
+            scroll-behavior: smooth;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+        .product-carousel::-webkit-scrollbar {
+            display: none; /* Hide scrollbar */
+        }
+        .product {
+            flex: 0 0 auto;
+            width: 220px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .product img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .product h3 {
+            font-size: 18px;
+            margin: 10px;
+            color: #333;
+        }
+        .product p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 10px 10px;
+        }
+        .product .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2874f0;
+            margin: 0 10px 10px;
+        }
+        .product .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px;
+        }
+        .product .quantity-controls button {
+            background-color: #2874f0;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .product .quantity-controls button:hover {
+            background-color: #0056b3;
+        }
+        .product .quantity-controls input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0 5px;
+        }
+        .product button.add-to-cart {
+            margin: 10px;
+            padding: 10px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: calc(100% - 20px);
+        }
+        .product button.add-to-cart:hover {
+            background-color: #e91e63;
+        }
+        .hero {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .hero h1 {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="external-libraries.html">
+    <link rel="import" href="external-libraries.html">
+</head>
+<body>
+    <header>
+        <div class="logo">T-Shirt Shop</div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for products...">
+            <button>Search</button>
+        </div>
+        <div class="icons">
+            <span onclick="showWishlist()">❤️</span>
+            <span onclick="showCart()">🛒</span>
+            <span class="menu-btn" onclick="toggleMenu()">☰</span>
+        </div>
+    </header>
+    <div class="hero">
+        <h1>Welcome to T-Shirt Shop</h1>
+        <p>Discover the best customizable T-shirts for every occasion.</p>
+    </div>
+    <nav id="hamburger-menu" style="display: none; background-color: #0056b3; position: absolute; top: 60px; left: 0; width: 100%; z-index: 1000;">
+        <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 25px; font-size: 36px; color: white; text-decoration: none;">&times;</a>
+        <a href="home.html" style="color: white; text-decoration: none; display: block; padding: 10px 20px;">Home</a>
+        <a href="javascript:void(0)" onclick="showProducts()" style="color: white; text-decoration: none; display: block; padding: 10px 20px;">View Products</a>
+        <div class="dropdown">
+            <button class="dropbtn">Category</button>
+            <div class="dropdown-content">
+                <a href="mens-tshirts.html">Men's T-Shirts</a>
+                <a href="womens-tshirts.html">Women's T-Shirts</a>
+                <a href="childrens-tshirts.html">Children's T-Shirts</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Customize</button>
+            <div class="dropdown-content">
+                <a href="javascript:void(0)" onclick="triggerUpload()">Upload Photo</a>
+                <a href="javascript:void(0)" onclick="addDesign()">Add Design</a>
+            </div>
+        </div>
+        <a href="javascript:void(0)" onclick="showAbout()" style="color: white; text-decoration: none; display: block; padding: 10px 20px;">About</a>
+    </nav>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('hamburger-menu');
+            menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+        }
+
+        function closeNav() {
+            document.getElementById('hamburger-menu').style.display = 'none';
+        }
+    </script>
+    <nav id="hamburger-menu" style="display: none; background-color: #0056b3; position: absolute; top: 60px; left: 0; width: 100%; z-index: 1000;">
+        <a href="javascript:void(0)" onclick="closeNav()" style="position: absolute; top: 10px; right: 25px; font-size: 36px; color: white; text-decoration: none;">&times;</a>
+            <a href="home.html" style="color: white; text-decoration: none; display: block; padding: 10px 20px;">Home</a>
+            <a href="javascript:void(0)" onclick="showProducts()" style="color: white; text-decoration: none; display: block; padding: 10px 20px;">View Products</a>
+            <div class="dropdown">
+                <button class="dropbtn">Category</button>
+                <div class="dropdown-content">
+                    <a href="mens-tshirts.html">Men's T-Shirts</a>
+                    <a href="womens-tshirts.html">Women's T-Shirts</a>
+                    <a href="childrens-tshirts.html">Children's T-Shirts</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Customize</button>
+                <div class="dropdown-content">
+                    <a href="javascript:void(0)" onclick="triggerUpload()">Upload Photo</a>
+                    <a href="javascript:void(0)" onclick="addDesign()">Add Design</a>
+                </div>
+    </nav>
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('hamburger-menu');
+            menu.style.display = menu.style.display === 'none' || menu.style.display === '' ? 'block' : 'none';
+        }
+    </script>
+   
+       
+        <!-- Main Content -->
+        <div style="margin-left: 0; padding: 20px; width: 100%;">
+            <button onclick="toggleFilters()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px;">
+                Apply Filters
+            </button>
+            <div id="filters" style="padding: 20px; background-color: #f9f9f9; border-bottom: 1px solid #ddd; display: none;">
+                <h3 style="margin-bottom: 10px;">Filters</h3>
+                <label for="price-filter">Price:</label>
+                <select id="price-filter" style="margin-right: 15px; padding: 5px;">
+                    <option value="all">All</option>
+                    <option value="low">Low to High</option>
+                    <option value="high">High to Low</option>
+                </select>
+                <label for="discount-filter">Discount:</label>
+                <select id="discount-filter" style="margin-right: 15px; padding: 5px;">
+                    <option value="all">All</option>
+                    <option value="10">10% or more</option>
+                    <option value="20">20% or more</option>
+                    <option value="30">30% or more</option>
+                </select>
+                <label for="color-filter">Color:</label>
+                <select id="color-filter" style="margin-right: 15px; padding: 5px;">
+                    <option value="all">All</option>
+                    <option value="white">White</option>
+                    <option value="black">Black</option>
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                </select>
+                <label for="neck-filter">Neck Type:</label>
+                <select id="neck-filter" style="padding: 5px;">
+                    <option value="all">All</option>
+                    <option value="round">Round Neck</option>
+                    <option value="v-neck">V-Neck</option>
+                </select>
+                <button onclick="applyFilters()" style="margin-left: 15px; padding: 5px 10px; background-color: #0056b3; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    Apply Filters
+                </button>
+            </div>
+            <div id="home" style="display: none;">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="featured1.jpg" alt="Featured Product 1"></div>
+                        <div class="swiper-slide"><img src="featured2.jpg" alt="Featured Product 2"></div>
+                        <div class="swiper-slide"><img src="featured3.jpg" alt="Featured Product 3"></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+            <div class="product-carousel">
+                <div class="product" id="product1">
+                    <img src="images/high-quality-tshirt1.jpg" alt="Classic T-Shirt">
+                    <h3>Classic T-Shirt</h3>
+                    <p class="price">$20.00</p>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity('quantity1')">-</button>
+                        <input type="number" id="quantity1" value="1" min="1" readonly>
+                        <button onclick="increaseQuantity('quantity1')">+</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('product1')">Add to Cart</button>
+                </div>
+                <div class="product" id="product2">
+                    <img src="images/high-quality-tshirt2.jpg" alt="Graphic T-Shirt">
+                    <h3>Graphic T-Shirt</h3>
+                    <p class="price">$25.00</p>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity('quantity2')">-</button>
+                        <input type="number" id="quantity2" value="1" min="1" readonly>
+                        <button onclick="increaseQuantity('quantity2')">+</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('product2')">Add to Cart</button>
+                </div>
+                <div class="product" id="product3">
+                    <img src="images/high-quality-tshirt3.jpg" alt="V-Neck T-Shirt">
+                    <h3>V-Neck T-Shirt</h3>
+                    <p class="price">$22.00</p>
+                    <div class="quantity-controls">
+                        <button onclick="decreaseQuantity('quantity3')">-</button>
+                        <input type="number" id="quantity3" value="1" min="1" readonly>
+                        <button onclick="increaseQuantity('quantity3')">+</button>
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart('product3')">Add to Cart</button>
+                </div>
+                <!-- Add more products as needed -->
+            </div>
+            <div class="product" id="product3" onclick="showProduct('product3')">
+                <img src="images/high-quality-tshirt3.jpg" alt="V-Neck T-Shirt">
+                <h3>V-Neck T-Shirt</h3>
+                <p>$22.00</p>
+                <label for="color3">Color:</label>
+                <select id="color3">
+                    <option>White</option>
+                    <option>Blue</option>
+                    <option>Green</option>
+                </select>
+                <label for="size3">Size:</label>
+                <select id="size3">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                    <option>XL</option>
+                </select>
+                <p>Quantity: <input type="number" value="1" min="1" style="width: 50px;"></p>
+
+                <button>Add to Cart</button>
+                <button onclick="likeProduct(this, 'product3')" style="margin-top: 10px; padding: 5px 10px; background-color: #ff4081; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    ❤️ Like
+                </button>
+            </div>
+            <div class="product" id="product3" onclick="showProduct('product3')">
+                <img src="images/high-quality-tshirt3.jpg" alt="V-Neck T-Shirt">
+                <h3>V-Neck T-Shirt</h3>
+                <p>$22.00</p>
+                <label for="color3">Color:</label>
+                <select id="color3">
+                    <option>White</option>
+                    <option>Blue</option>
+                    <option>Green</option>
+                </select>
+                <label for="size3">Size:</label>
+                <select id="size3">
+                    <option>Small</option>
+                    <option>Medium</option>
+                    <option>Large</option>
+                    <option>XL</option>
+                </select>
+                <p>Quantity: <input type="number" value="1" min="1" style="width: 50px;"></p>
+
+                <button>Add to Cart</button>
+                <button onclick="likeProduct(this, 'product3')" style="margin-top: 10px; padding: 5px 10px; background-color: #ff4081; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    ❤️ Like
+                </button>
+            </div>
+        </div>
+        </div>
+                <div class="product" id="product3" onclick="showProduct('product3')">
+                    <img src="images/high-quality-tshirt3.jpg" alt="V-Neck T-Shirt">
+                    <h3>V-Neck T-Shirt</h3>
+                    <p>$22.00</p>
+                    <label for="color3">Color:</label>
+                    <select id="color3">
+                        <option>White</option>
+                        <option>Blue</option>
+                        <option>Green</option>
+                    </select>
+                    <label for="size3">Size:</label>
+                    <select id="size3">
+                        <option>Small</option>
+                        <option>Medium</option>
+                        <option>Large</option>
+                        <option>XL</option>
+                    </select>
+                    <p>Quantity: <input type="number" value="1" min="1" style="width: 50px;"></p>
+
+                    <button>Add to Cart</button>
+                    <button onclick="likeProduct(this, 'product3')" style="margin-top: 10px; padding: 5px 10px; background-color: #ff4081; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        ❤️ Like
+                    </button>
+                </div>
+            </div>
+            <div id="customize" style="display: none; padding: 20px;">
+                <h3>Customize Your T-Shirt</h3>
+                <p>Upload your photos and add your own designs to create a unique t-shirt!</p>
+                <input type="file" id="upload-photo" accept="image/*" style="display: none;">
+                <button onclick="triggerUpload()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Upload</button>
+                <p id="upload-status" style="margin-top: 10px; color: green;"></p>
+            </div>
+            <div class="modal" id="product-modal">
+                <div class="modal-content">
+                    <img id="modal-img" src="" alt="Product Image">
+                    <h3 id="modal-title"></h3>
+                    <p id="modal-price"></p>
+                    <button class="close-btn" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+            <div id="wishlist" style="display: none; padding: 20px;">
+                <h3>Your Wishlist</h3>
+                <div id="wishlist-items" style="display: flex; flex-wrap: wrap; gap: 15px;"></div>
+            </div>
+            <div id="category" style="display: none; padding: 20px;">
+                <h3>Category</h3>
+                <ul>
+                    <li>Men's T-Shirts</li>
+                    <li>Women's T-Shirts</li>
+                    <li>Children's T-Shirts</li>
+                </ul>
+            </div>
+        </n>
+            <div id="customize" style="display: none; padding: 20px;">
+                <h3>Customize Your T-Shirt</h3>
+                <p>Upload your photos and add your own designs to create a unique t-shirt!</p>
+                <input type="file" id="upload-photo" accept="image/*" style="display: none;">
+                <button onclick="triggerUpload()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Upload</button>
+                <p id="upload-status" style="margin-top: 10px; color: green;"></p>
+            </div>
+            <footer>
+                &copy; 2023 T-Shirt Shop. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+            </footer>
+        </div>
+    </div>
+    <div id="cart-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 500px; text-align: center;">
+            <h3>Your Cart</h3>
+            <div id="cart-items" style="text-align: left; margin-top: 20px;"></div>
+            <button onclick="closeCart()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px;">Close</button>
+        </div>
+    </div>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="external-libraries.html"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 3000, // Slide changes every 3 seconds
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        // Open modal with product details
+        function openModal(imgSrc, title, price) {
+            document.getElementById('modal-img').src = imgSrc;
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-price').textContent = price;
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
+        // Show only the clicked product
+        function showProduct(productId) {
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                if (product.id === productId) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Scroll to the home section
+        function scrollToHome() {
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll to the products section
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Call external libraries
+        fetch('external-libraries.html')
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                document.head.append(...doc.head.children);
+                document.body.append(...doc.body.children);
+            });
+
+        // Open the size guide modal
+        function openSizeGuide() {
+            document.getElementById('size-guide-modal').style.display = 'flex';
+        }
+
+        // Close the size guide modal
+        function closeSizeGuide() {
+            document.getElementById('size-guide-modal').style.display = 'none';
+        }
+
+        // Show the selected size
+        function showSelectedSize() {
+            const size = document.getElementById('size-selector').value;
+            const sizeText = {
+                small: "Small (Chest 34-36 inches)",
+                medium: "Medium (Chest 38-40 inches)",
+                large: "Large (Chest 42-44 inches)",
+                xl: "XL (Chest 46-48 inches)"
+            };
+            document.getElementById('selected-size').textContent = `You selected: ${sizeText[size]}`;
+        }
+
+        // Handle photo upload
+        document.getElementById('photo-upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('upload-status').textContent = `Uploaded: ${file.name}`;
+            } else {
+                document.getElementById('upload-status').textContent = 'No file selected.';
+            }
+        });
+
+        // Search products by name
+        function searchProducts() {
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                const productName = product.querySelector('h3').textContent.toLowerCase();
+                if (productName.includes(query)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const priceFilter = document.getElementById('price-filter').value;
+            const discountFilter = document.getElementById('discount-filter').value;
+            const colorFilter = document.getElementById('color-filter').value.toLowerCase();
+            const neckFilter = document.getElementById('neck-filter').value.toLowerCase();
+
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                let show = true;
+
+                // Filter by price
+                const productPrice = parseFloat(product.querySelector('p').textContent.replace('$', ''));
+                if (priceFilter === 'low' && productPrice > 20) show = false;
+                if (priceFilter === 'high' && productPrice < 20) show = false;
+
+                // Filter by discount
+                const productDiscount = parseInt(product.getAttribute('data-discount') || '0');
+                if (discountFilter !== 'all' && productDiscount < parseInt(discountFilter)) show = false;
+
+                // Filter by color
+                const productColor = product.querySelector('select[id^="color"]').value.toLowerCase();
+                if (colorFilter !== 'all' && productColor !== colorFilter) show = false;
+
+                // Filter by neck type
+                const productName = product.querySelector('h3').textContent.toLowerCase();
+                if (neckFilter !== 'all' && !productName.includes(neckFilter)) show = false;
+
+                // Show or hide the product
+                product.style.display = show ? 'block' : 'none';
+            });
+        }
+
+        // Like a product
+        const wishlist = [];
+
+        function likeProduct(button, productId) {
+            const product = document.getElementById(productId);
+            const productName = product.querySelector('h3').textContent;
+            const productImage = product.querySelector('img').src;
+            const productPrice = product.querySelector('p').textContent;
+
+            if (button.textContent === '❤️ Like') {
+                button.textContent = '💔 Unlike';
+                wishlist.push({ id: productId, name: productName, image: productImage, price: productPrice });
+            } else {
+                button.textContent = '❤️ Like';
+                removeFromWishlist(productId);
+            }
+        }
+
+        function removeFromWishlist(productId) {
+            const index = wishlist.findIndex(item => item.id === productId);
+            if (index !== -1) wishlist.splice(index, 1);
+            updateWishlistUI();
+        }
+
+        function updateWishlistUI() {
+            const wishlistContainer = document.getElementById('wishlist-items');
+            wishlistContainer.innerHTML = ''; // Clear previous items
+            wishlist.forEach(item => {
+                const wishlistItem = document.createElement('div');
+                wishlistItem.style = 'border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; width: 200px; position: relative;';
+                wishlistItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" style="width: 100%; border-radius: 5px;">
+                    <h4>${item.name}</h4>
+                    <p>${item.price}</p>
+                    <button onclick="removeFromWishlist('${item.id}')" style="position: absolute; top: 5px; right: 5px; background: none; border: none; cursor: pointer;">
+                        🗑️
+                    </button>
+                `;
+                wishlistContainer.appendChild(wishlistItem);
+            });
+        }
+
+        function showWishlist() {
+            updateWishlistUI();
+            document.getElementById('wishlist').style.display = 'block';
+            document.getElementById('products').style.display = 'none';
+            document.getElementById('home').style.display = 'none';
+        }
+
+        const cart = [];
+
+        function addToCart(productId) {
+            const product = document.getElementById(productId);
+            const productName = product.querySelector('h3').textContent;
+            const productPrice = product.querySelector('.price').textContent;
+            const productQuantity = parseInt(product.querySelector('input[type="number"]').value);
+
+            // Redirect to cart.html with product details as query parameters
+            const cartUrl = `cart.html?name=${encodeURIComponent(productName)}&price=${encodeURIComponent(productPrice)}&quantity=${encodeURIComponent(productQuantity)}`;
+            window.location.href = cartUrl;
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = ''; // Clear previous items
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+            } else {
+                cart.forEach(item => {
+                    const cartItem = document.createElement('div');
+                    cartItem.style = 'border: 1px solid #ddd; padding: 10px; border-radius: 5px; margin-bottom: 10px;';
+                    cartItem.innerHTML = `
+                        <p><strong>Product:</strong> ${item.name}</p>
+                        <p><strong>Price:</strong> ${item.price}</p>
+                        <p><strong>Quantity:</strong> ${item.quantity}</p>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+        }
+
+        function showCart() {
+            updateCartUI();
+            document.getElementById('cart-modal').style.display = 'flex';
+        }
+
+        function closeCart() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        function showCart() {
+            alert("Cart functionality triggered!");
+            // Add logic to display the cart items
+        }
+
+        // Open the side navigation
+        function openNav() {
+            document.getElementById("side-nav").style.width = "250px";
+        }
+
+        // Close the side navigation
+        function closeNav() {
+            document.getElementById("side-nav").style.width = "0";
+        }
+
+        // Logout function
+        function logout() {
+            alert("Logout Successfully");
+            window.location.href = "index.html"; // Redirect to the login page
+        }
+
+        // Show products section
+        function showProducts() {
+            // Show all products
+            const products = document.querySelectorAll('.product');
+            products.forEach(product => {
+                product.style.display = 'block'; // Display all products
+            });
+
+            // Display the products section and hide other sections
+            document.getElementById('products').style.display = 'flex';
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('wishlist').style.display = 'none';
+            document.getElementById('customize').style.display = 'none';
+        }
+
+        // Redirect from the home page when "Shopping Now" is clicked
+        document.addEventListener('DOMContentLoaded', () => {
+            const shoppingNowButton = document.querySelector('a[href="tshirt-website.html"]');
+            if (shoppingNowButton) {
+                shoppingNowButton.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    showProducts(); // Show all products
+                });
+            }
+        });
+
+        function showHome() {
+            document.getElementById("home").style.display = "block";
+            document.getElementById("products").style.display = "none";
+            // Add logic to hide other sections if needed
+        }
+
+        function showAbout() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("products").style.display = "none";
+            document.getElementById("about").style.display = "block";
+        }
+
+        function showCategory() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("category").style.display = "block";
+            document.getElementById("customize").style.display = "none";
+            document.getElementById("about").style.display = "none";
+        }
+
+        function showCustomize() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("category").style.display = "none";
+            document.getElementById("customize").style.display = "block";
+            document.getElementById("about").style.display = "none";
+        }
+
+        function login() {
+            // Simulate login success
+            alert("Login Successful");
+            window.location.href = "home.html"; // Redirect to the home page
+        }
+
+        document.getElementById("upload-photo").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("upload-status").textContent = `Uploaded: ${file.name}`;
+            } else {
+                document.getElementById("upload-status").textContent = "No file selected.";
+            }
+        });
+
+        function filterCategory(category) {
+            alert(`Filtering by category: ${category}`);
+            // Add logic to filter products by category
+        }
+
+        function uploadPhoto() {
+            alert("Upload Photo functionality triggered!");
+            // Add logic for uploading photos
+        }
+
+        function addDesign() {
+            const customizeSection = document.getElementById('customize');
+            customizeSection.innerHTML = `
+                <h3>Customize Your T-Shirt</h3>
+                <p>Upload your design and preview it on different T-shirt styles!</p>
+                <input type="file" id="design-upload" accept="image/*" style="display: none;">
+                <button onclick="triggerDesignUpload()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Upload Design</button>
+                <p id="design-status" style="margin-top: 10px; color: green;"></p>
+                <div id="design-preview" style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;"></div>
+            `;
+
+            // Add event listener for file upload
+            document.getElementById('design-upload').addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const designPreview = document.getElementById('design-preview');
+                        designPreview.innerHTML = ''; // Clear previous previews
+
+                        // Array of plain T-shirt colors
+                        const tshirtColors = ['white', 'black', 'blue', 'red', 'green'];
+
+                        // Generate previews for each T-shirt color
+                        tshirtColors.forEach(color => {
+                            const previewContainer = document.createElement('div');
+                            previewContainer.style = 'text-align: center; width: 150px;';
+
+                            previewContainer.innerHTML = `
+                                <div style="width: 150px; height: 200px; background-color: ${color}; border: 1px solid #ddd; border-radius: 8px; position: relative;">
+                                    <img src="${e.target.result}" alt="Design" style="max-width: 100%; max-height: 100%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                </div>
+                                <p style="margin-top: 10px; font-size: 14px; color: #555;">${color.charAt(0).toUpperCase() + color.slice(1)} T-Shirt</p>
+                            `;
+                            designPreview.appendChild(previewContainer);
+                        });
+
+                        document.getElementById('design-status').textContent = `Uploaded: ${file.name}`;
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    document.getElementById('design-status').textContent = 'No file selected.';
+                }
+            });
+        }
+
+        // Trigger file upload dialog
+        function triggerDesignUpload() {
+            document.getElementById('design-upload').click();
+        }
+
+        function triggerUpload() {
+            document.getElementById("upload-photo").click(); // Open file manager
+        }
+
+        document.getElementById("photo-upload").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("upload-status").textContent = `Uploaded: ${file.name}`;
+            } else {
+                document.getElementById("upload-status").textContent = "No file selected.";
+            }
+        });
+
+        function addDesign() {
+            alert("Add Design functionality triggered!");
+            // Add logic for adding designs
+        }
+
+        function toggleFilters() {
+            const filters = document.getElementById("filters");
+            filters.style.display = filters.style.display === "none" ? "block" : "none";
+        }
+
+        function increaseQuantity(id) {
+            const input = document.getElementById(id);
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decreaseQuantity(id) {
+            const input = document.getElementById(id);
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+    </script>
+</body>
+</html>

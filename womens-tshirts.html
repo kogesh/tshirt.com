@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's T-Shirts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f3f6;
+        }
+        header {
+            background-color: #2874f0;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+        }
+        .product {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .product h3 {
+            font-size: 16px;
+            margin: 10px 0;
+            color: #333;
+        }
+        .product p {
+            font-size: 14px;
+            color: #555;
+            margin: 0 10px 10px;
+        }
+        .product .price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2874f0;
+        }
+        .product button {
+            margin: 10px;
+            padding: 10px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .product button:hover {
+            background-color: #e91e63;
+        }
+    </style>
+    <script>
+        // Function to redirect to the payment page
+        function redirectToPayment(productName, productPrice) {
+            const paymentUrl = `payment.html?name=${encodeURIComponent(productName)}&price=${encodeURIComponent(productPrice)}`;
+            window.location.href = paymentUrl;
+        }
+
+        // Function to redirect to the cart page
+        function redirectToCart(productName, productPrice, quantity, size) {
+            const cartUrl = `cart.html?name=${encodeURIComponent(productName)}&price=${encodeURIComponent(productPrice)}&quantity=${encodeURIComponent(quantity)}&size=${encodeURIComponent(size)}`;
+            window.location.href = cartUrl;
+        }
+    </script>
+</head>
+<body>
+    <header>Women's T-Shirts</header>
+    <div class="products">
+        <div class="product">
+            <img src="images/womens-tshirt1.jpg" alt="Women's T-Shirt 1">
+            <h3>Women's V-Neck T-Shirt</h3>
+            <p class="price">$25.00</p>
+            <p>Quantity: <input type="number" id="quantity1" value="1" min="1" style="width: 50px;"></p>
+            <label for="size1">Select Size:</label>
+            <select id="size1" style="margin: 10px 0; padding: 5px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+            </select>
+            <button onclick="likeProduct(this)">❤️ Like</button>
+            <button onclick="addToWishlist()">Add to Wishlist</button>
+            <button onclick="redirectToCart('Women\'s V-Neck T-Shirt', 25.00, document.getElementById('quantity1').value, document.getElementById('size1').value)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="images/womens-tshirt2.jpg" alt="Women's T-Shirt 2">
+            <h3>Women's Round Neck T-Shirt</h3>
+            <p class="price">$22.00</p>
+            <p>Quantity: <input type="number" id="quantity2" value="1" min="1" style="width: 50px;"></p>
+            <label for="size2">Select Size:</label>
+            <select id="size2" style="margin: 10px 0; padding: 5px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+            </select>
+            <button onclick="likeProduct(this)">❤️ Like</button>
+            <button onclick="addToWishlist()">Add to Wishlist</button>
+            <button onclick="redirectToCart('Women\'s Round Neck T-Shirt', 22.00, document.getElementById('quantity2').value, document.getElementById('size2').value)">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="images/womens-tshirt3.jpg" alt="Women's T-Shirt 3">
+            <h3>Women's Graphic T-Shirt</h3>
+            <p class="price">$28.00</p>
+            <p>Quantity: <input type="number" id="quantity3" value="1" min="1" style="width: 50px;"></p>
+            <label for="size3">Select Size:</label>
+            <select id="size3" style="margin: 10px 0; padding: 5px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+            </select>
+            <button onclick="likeProduct(this)">❤️ Like</button>
+            <button onclick="addToWishlist()">Add to Wishlist</button>
+            <button onclick="redirectToCart('Women\'s Graphic T-Shirt', 28.00, document.getElementById('quantity3').value, document.getElementById('size3').value)">Add to Cart</button>
+        </div>     
+           
+        <!-- Add more products as needed -->
+    </div>
+</body>
+</html>
+

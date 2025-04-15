@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's T-Shirts Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: grey;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            position: relative;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .product img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .product p {
+            font-size: 14px;
+            color: #555;
+        }
+        .product button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .product button:hover {
+            background-color: #0056b3;
+        }
+        /* Unique styling for the Home button */
+        nav a.home-button {
+            background-color: #ff9f00;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 15px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        nav a.home-button:hover {
+            background-color: #e68a00;
+            transform: scale(1.1);
+        }
+        /* Styling for the left button */
+        .left-button {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .left-button:hover {
+            background-color: #0056b3;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="left-button" onclick="goToPreviousPage()">&#8592;</button>
+        Men's T-Shirts Collection
+    </header>
+    <nav>
+        <!-- ...existing code... -->
+    </nav>
+    <div class="products">
+        <div class="product" id="product1">
+            <img src="mens-tshirt1.jpg" alt="Men's T-Shirt 1">
+            <h3>Classic T-Shirt</h3>
+            <p>Price: $20.00</p>
+            <p>Quantity: <input type="number" value="1" min="1" style="width: 50px;"></p>
+            <label for="size1">Select Size:</label>
+            <select id="size1" style="margin: 10px 0; padding: 5px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+            </select>
+            <button onclick="likeProduct(this)">❤️ Like</button>
+            <button onclick="addToWishlist()">Add to Wishlist</button>
+            <button onclick="processPayment('product1')">Add to Cart</button>
+        </div>
+        <div class="product" id="product2">
+            <img src="mens-tshirt2.jpg" alt="Men's T-Shirt 2">
+            <h3>Graphic T-Shirt</h3>
+            <p>Price: $25.00</p>
+            <p>Quantity: <input type="number" value="1" min="1" style="width: 50px;"></p>
+            <label for="size2">Select Size:</label>
+            <select id="size2" style="margin: 10px 0; padding: 5px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+            </select>
+            <button onclick="likeProduct(this)">❤️ Like</button>
+            <button onclick="addToWishlist()">Add to Wishlist</button>
+            <button onclick="processPayment('product2')">Add to Cart</button>
+        </div>
+        <div class="product" id="product3">
+            <img src="mens-tshirt3.jpg" alt="Men's T-Shirt 3">
+            <h3>V-Neck T-Shirt</h3>
+            <p>Price: $22.00</p>
+            <p>Quantity: <input type="number" value="1" min="1" style="width: 50px;"></p>
+            <label for="size3">Select Size:</label>
+            <select id="size3" style="margin: 10px 0; padding: 5px;">
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+                <option value="xl">XL</option>
+            </select>
+            <button onclick="likeProduct(this)">❤️ Like</button>
+            <button onclick="addToWishlist()">Add to Wishlist</button>
+            <button onclick="processPayment('product3')">Add to Cart</button>
+        </div>
+    </div>
+
+    <div id="size-guide-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 500px; text-align: center;">
+            <h3>Size Guide</h3>
+            <p>Find the perfect fit for your T-shirt:</p>
+            <ul style="text-align: left;">
+                <li><strong>Small:</strong> Chest 34-36 inches</li>
+                <li><strong>Medium:</strong> Chest 38-40 inches</li>
+                <li><strong>Large:</strong> Chest 42-44 inches</li>
+                <li><strong>XL:</strong> Chest 46-48 inches</li>
+            </ul>
+            <button onclick="closeSizeGuide()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <div id="payment-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+        <div style="background: white; padding: 20px; border-radius: 8px; width: 80%; max-width: 400px; text-align: center;">
+            <h3>Select Payment Method</h3>
+            <button onclick="completeOrder('Online Payment')" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Online Payment</button>
+            <button onclick="completeOrder('Cash on Delivery')" style="padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Cash on Delivery</button>
+            <button onclick="closePaymentModal()" style="padding: 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">Cancel</button>
+        </div>
+    </div>
+
+    <div id="order-success" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+        <div style="background: #28a745; color: white; padding: 20px; border-radius: 8px; text-align: center; font-size: 20px; position: relative;">
+            <h3>Order Successfully Placed!</h3>
+            <p>Thank you for your purchase.</p>
+            <button onclick="closeOrderSuccess()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Close</button>
+            <audio id="order-sound" src="order-success.mp3"></audio>
+            <canvas id="confetti-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></canvas>
+        </div>
+    </div>
+
+    <script>
+        function likeProduct(button) {
+            if (button.textContent === '❤️ Like') {
+                button.textContent = '💔 Unlike';
+                alert('Added to Likes!');
+            } else {
+                button.textContent = '❤️ Like';
+                alert('Removed from Likes!');
+            }
+        }
+
+        function addToWishlist() {
+            alert('Added to Wishlist!');
+        }
+
+        function processPayment(productId) {
+            const product = document.getElementById(productId);
+            const productName = product.querySelector('h3').textContent;
+            const productPrice = product.querySelector('p').textContent.replace('Price: ', '');
+            const productQuantity = product.querySelector('input[type="number"]').value;
+            const productSize = product.querySelector('select').value;
+
+            // Redirect to the cart page with product details as query parameters
+            const cartUrl = `cart.html?name=${encodeURIComponent(productName)}&price=${encodeURIComponent(productPrice)}&quantity=${encodeURIComponent(productQuantity)}&size=${encodeURIComponent(productSize)}`;
+            window.location.href = cartUrl;
+        }
+
+        function completeOrder(method) {
+            alert(`Payment Method Selected: ${method}`);
+            document.getElementById('payment-modal').style.display = 'none';
+            document.getElementById('order-success').style.display = 'flex';
+            playOrderSound();
+            startConfetti();
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+        }
+
+        function closeOrderSuccess() {
+            document.getElementById('order-success').style.display = 'none';
+            stopConfetti();
+        }
+
+        function playOrderSound() {
+            const sound = document.getElementById('order-sound');
+            sound.play();
+        }
+
+        // Confetti animation
+        let confettiInterval;
+        function startConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            const confetti = [];
+            const colors = ['#ff0', '#f00', '#0f0', '#00f', '#f0f', '#0ff'];
+
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            for (let i = 0; i < 100; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 2,
+                    d: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.random() * 10 - 5,
+                });
+            }
+
+            function drawConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confetti.forEach((c) => {
+                    ctx.beginPath();
+                    ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2, false);
+                    ctx.fillStyle = c.color;
+                    ctx.fill();
+                });
+                updateConfetti();
+            }
+
+            function updateConfetti() {
+                confetti.forEach((c) => {
+                    c.y += c.d;
+                    c.tilt += Math.random() * 0.5 - 0.25;
+                    if (c.y > canvas.height) {
+                        c.y = -10;
+                        c.x = Math.random() * canvas.width;
+                    }
+                });
+            }
+
+            confettiInterval = setInterval(drawConfetti, 30);
+        }
+
+        function stopConfetti() {
+            clearInterval(confettiInterval);
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function openSizeGuide() {
+            document.getElementById('size-guide-modal').style.display = 'flex';
+        }
+
+        function closeSizeGuide() {
+            document.getElementById('size-guide-modal').style.display = 'none';
+        }
+
+        function goToPreviousPage() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

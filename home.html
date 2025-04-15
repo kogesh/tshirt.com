@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Customizable T-Shirt Shop</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: grey;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #side-nav {
+            width: 0;
+            background-color: #0056b3;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+        #side-nav a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+        #side-nav a:hover {
+            background-color: #003d80;
+        }
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 100vh;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .swiper-pagination-bullet {
+            background: #007BFF;
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <header>Customizable T-Shirt Shop</header>
+    <nav style="background-color: #0056b3; padding: 10px; display: flex; justify-content: center;">
+        <a href="tshirt-website.html" style="color: white; text-decoration: none; margin: 0 15px;">Shopping Now</a>
+        <div class="dropdown" style="position: relative;">
+            <button onclick="toggleDropdown()" style="background-color: transparent; border: none; color: white; text-decoration: none; margin: 0 15px; cursor: pointer;">My Profile</button>
+            <div class="dropdown-content" id="dropdown-content" style="display: none; position: absolute; background-color: #f9f9f9; min-width: 160px; box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); z-index: 1;">
+                <!-- Removed "View Profile" option -->
+            </div>
+        </div>
+        <button onclick="logout()" style="background-color: transparent; border: none; color: white; text-decoration: none; margin: 0 15px; cursor: pointer;">Logout</button>
+    </nav>
+    <div id="success-message" style="display: none; color: rgb(35, 3, 177); text-align: center; margin-top: 10px;">
+        Login Successfully!
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="images.jpg/home 1.jpg" alt="image.jpg">
+            </div>
+            <div class="swiper-slide">
+                <img src="images.jpg/home 2.jpg.png" alt="image.jpg">
+            </div>
+            <div class="swiper-slide">
+                <img src="featured3.jpg" alt="Featured Product 3">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/featured4.jpg" alt="Featured Product 4">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/featured5.jpg" alt="Featured Product 5">
+            </div>
+            <div class="swiper-slide">
+                <img src="images/featured6.jpg" alt="Featured Product 6">
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+    <div id="home" style="padding: 20px;">
+        <h1>Welcome to the Customizable T-Shirt Shop</h1>
+        <p>Explore our collection of high-quality customizable t-shirts!</p>
+    </div>
+    <div id="category" style="display: none; padding: 20px;">
+        <h3>Category</h3>
+        <ul>
+            <li>Men's T-Shirts</li>
+            <li>Women's T-Shirts</li>
+            <li>Children's T-Shirts</li>
+        </ul>
+    </div>
+    <div id="customize" style="display: none; padding: 20px;">
+        <h3>Customize Your T-Shirt</h3>
+        <p>Upload your photos and add your own designs to create a unique t-shirt!</p>
+        <input type="file" id="upload-photo" accept="image/*">
+        <p id="upload-status" style="margin-top: 10px; color: green;"></p>
+    </div>
+    <div id="products" style="display: none; padding: 20px;">
+        <h3>Product Details</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+            <div style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; width: 200px;">
+                <img src="featured1.jpg" alt="Classic T-Shirt" style="width: 100%; border-radius: 5px;">
+                <h4>Classic T-Shirt</h4>
+                <p>$20.00</p>
+            </div>
+            <div style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; width: 200px;">
+                <img src="featured2.jpg" alt="Graphic T-Shirt" style="width: 100%; border-radius: 5px;">
+                <h4>Graphic T-Shirt</h4>
+                <p>$25.00</p>
+            </div>
+            <div style="border: 1px solid #ddd; padding: 10px; border-radius: 5px; text-align: center; width: 200px;">
+                <img src="featured3.jpg" alt="V-Neck T-Shirt" style="width: 100%; border-radius: 5px;">
+                <h4>V-Neck T-Shirt</h4>
+                <p>$22.00</p>
+            </div>
+        </div>
+    </div>
+    <div id="about" style="display: none; padding: 20px;">
+        <h2>About Us</h2>
+        <p>Welcome to the Customizable T-Shirt Shop! We offer high-quality, customizable t-shirts to suit your style.</p>
+    </div>
+    <div id="profile" style="display: none; padding: 20px; text-align: center;">
+        <h3>User Profile</h3>
+        <img id="profile-photo" src="default-profile.jpg" alt="Profile Photo" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 10px;">
+        <p id="user-name" style="font-size: 18px; font-weight: bold;">Username</p>
+        <p id="user-email" style="font-size: 16px; color: #555;">Email</p>
+        <button onclick="changeProfilePhoto()" style="padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Change Photo</button>
+        <input type="file" id="upload-profile-photo" accept="image/*" style="display: none;">
+    </div>
+
+    <footer style="background-color: #007BFF; color: white; text-align: center; padding: 20px;">
+        <p>&copy; 2023 Customizable T-Shirt Shop. All rights reserved.</p>
+        <div style="margin-top: 10px;">
+            <h3>About Us</h3>
+            <p>Welcome to the Customizable T-Shirt Shop! We offer high-quality, customizable t-shirts to suit your style.</p>
+            <p>Our mission is to provide you with the best shopping experience and unique designs tailored to your preferences.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        function openNav() {
+            document.getElementById("side-nav").style.width = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("side-nav").style.width = "0";
+        }
+
+        function showHome() {
+            document.getElementById("home").style.display = "block";
+            document.getElementById("category").style.display = "none";
+            document.getElementById("customize").style.display = "none";
+            document.getElementById("products").style.display = "none";
+            document.getElementById("about").style.display = "none";
+            document.getElementById("profile").style.display = "none";
+        }
+
+        function showCategory() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("category").style.display = "block";
+            document.getElementById("customize").style.display = "none";
+            document.getElementById("about").style.display = "none";
+            document.getElementById("profile").style.display = "none";
+        }
+
+        function showCustomize() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("category").style.display = "none";
+            document.getElementById("customize").style.display = "block";
+            document.getElementById("about").style.display = "none";
+            document.getElementById("profile").style.display = "none";
+        }
+
+        function showAbout() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("category").style.display = "none";
+            document.getElementById("customize").style.display = "none";
+            document.getElementById("about").style.display = "block";
+            document.getElementById("profile").style.display = "none";
+        }
+
+        function showProfile() {
+            document.getElementById("home").style.display = "none";
+            document.getElementById("profile").style.display = "block";
+            // Hide other sections if needed
+        }
+
+        function changeProfilePhoto() {
+            document.getElementById("upload-profile-photo").click();
+        }
+
+        document.getElementById("upload-profile-photo").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById("profile-photo").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function logout() {
+            const successMessage = document.createElement('div');
+            successMessage.textContent = "Logout Successfully!";
+            successMessage.style.color = "green";
+            successMessage.style.textAlign = "center";
+            successMessage.style.marginTop = "10px";
+            document.body.prepend(successMessage);
+
+            setTimeout(() => {
+                window.location.href = "index.html"; // Redirect to the login page
+            }, 2000); // Wait for 2 seconds before redirecting
+        }
+
+        document.getElementById("upload-photo").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById("upload-status").textContent = `Uploaded: ${file.name}`;
+            } else {
+                document.getElementById("upload-status").textContent = "No file selected.";
+            }
+        });
+
+        // Show success message if redirected from login
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('login') === 'success') {
+                document.getElementById('success-message').style.display = 'block';
+            }
+            const userName = "John Doe"; // Replace with dynamic user data
+            document.getElementById("user-name").textContent = userName;
+
+            const firstName = urlParams.get('firstName');
+            const lastName = urlParams.get('lastName');
+            const email = urlParams.get('email');
+
+            if (firstName && lastName && email) {
+                document.getElementById("user-name").textContent = `${firstName} ${lastName}`;
+                document.getElementById("user-email").textContent = email;
+            }
+
+            const storedUserData = JSON.parse(localStorage.getItem('userData'));
+            if (storedUserData) {
+                document.getElementById("user-name").textContent = `${storedUserData.firstName} ${storedUserData.lastName}`;
+                document.getElementById("user-email").textContent = storedUserData.email;
+            }
+        };
+
+        // Dropdown functionality
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.addEventListener('mouseover', () => {
+            dropdown.querySelector('.dropdown-content').style.display = 'block';
+        });
+        dropdown.addEventListener('mouseout', () => {
+            dropdown.querySelector('.dropdown-content').style.display = 'none';
+        });
+
+        function toggleDropdown() {
+            const dropdownContent = document.getElementById("dropdown-content");
+            dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+        }
+    </script>
+</body>
+</html>

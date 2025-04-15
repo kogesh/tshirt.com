@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            text-align: center;
+        }
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .container {
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        #payment-modal, #online-payment-modal, #address-modal, #success-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            padding-top: 100px;
+        }
+        #payment-modal div, #online-payment-modal div, #address-modal div, #success-message div {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: inline-block;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        #success-message div {
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Cart</h1>
+        <p id="cart-details"></p>
+        <a href="#" class="btn" id="payment-button">Proceed to Payment</a>
+    </div>
+
+    <!-- Payment Method Modal -->
+    <div id="payment-modal">
+        <div>
+            <h2>Select Delivery Method</h2>
+            <button class="btn" id="online-delivery" style="margin: 10px 0;">Online Delivery</button>
+            <button class="btn" id="cod-method" style="margin: 10px 0; background-color: #630feb;">Cash on Delivery</button>
+            <button class="btn" id="close-modal" style="margin: 10px 0; background-color: #f00;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Online Payment Modal -->
+    <div id="online-payment-modal">
+        <div>
+            <h2>Select Payment Method</h2>
+            <button class="btn" id="phonepe-method" style="margin: 10px 0;">PhonePe</button>
+            <button class="btn" id="gpay-method" style="margin: 10px 0;">GPay</button>
+            <button class="btn" id="paytm-method" style="margin: 10px 0;">Paytm</button>
+            <button class="btn" id="close-online-modal" style="margin: 10px 0; background-color: #f00;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Address Modal -->
+    <div id="address-modal">
+        <div>
+            <h2>Add Address</h2>
+            <textarea id="address-input" placeholder="Enter your address" style="width: 100%; height: 100px; margin-bottom: 10px;"></textarea>
+            <button class="btn" id="save-address" style="margin: 10px 0;">Save Address</button>
+            <button class="btn" id="close-address-modal" style="margin: 10px 0; background-color: #f00;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div id="success-message">
+        <div>
+            <h2 style="color: green;">Order Successfully Placed!</h2>
+            <p id="order-details"></p>
+            <button class="btn" id="close-success" style="margin: 10px 0;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Extract product details from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productName = urlParams.get('name');
+        const productPrice = urlParams.get('price');
+
+        // Display product details
+        document.getElementById('cart-details').textContent = `Product: ${productName}, Price: $${productPrice}`;
+
+        // Show payment modal
+        document.getElementById('payment-button').addEventListener('click', function (e) {
+            e.preventDefault();
+            document.getElementById('payment-modal').style.display = 'block';
+        });
+
+        // Close modals
+        document.getElementById('close-modal').addEventListener('click', function () {
+            document.getElementById('payment-modal').style.display = 'none';
+        });
+        document.getElementById('close-online-modal').addEventListener('click', function () {
+            document.getElementById('online-payment-modal').style.display = 'none';
+        });
+        document.getElementById('close-address-modal').addEventListener('click', function () {
+            document.getElementById('address-modal').style.display = 'none';
+        });
+        document.getElementById('close-success').addEventListener('click', function () {
+            document.getElementById('success-message').style.display = 'none';
+        });
+
+        // Online Delivery
+        document.getElementById('online-delivery').addEventListener('click', function () {
+            document.getElementById('payment-modal').style.display = 'none';
+            document.getElementById('online-payment-modal').style.display = 'block';
+        });
+
+        // Online Payment Methods
+        ['phonepe-method', 'gpay-method', 'paytm-method'].forEach(method => {
+            document.getElementById(method).addEventListener('click', function () {
+                document.getElementById('online-payment-modal').style.display = 'none';
+                showSuccessMessage();
+            });
+        });
+
+        // Cash on Delivery
+        document.getElementById('cod-method').addEventListener('click', function () {
+            const address = localStorage.getItem('address');
+            if (!address) {
+                alert('Please add your address!');
+                document.getElementById('payment-modal').style.display = 'none';
+                document.getElementById('address-modal').style.display = 'block';
+            } else {
+                showSuccessMessage();
+            }
+        });
+
+        // Save Address
+        document.getElementById('save-address').addEventListener('click', function () {
+            const address = document.getElementById('address-input').value;
+            if (address.trim()) {
+                localStorage.setItem('address', address);
+                alert('Address saved successfully!');
+                document.getElementById('address-modal').style.display = 'none';
+                showSuccessMessage();
+            } else {
+                alert('Please enter a valid address!');
+            }
+        });
+
+        // Show Success Message
+        function showSuccessMessage() {
+            document.getElementById('order-details').textContent = `Product: ${productName}, Price: $${productPrice}`;
+            document.getElementById('success-message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

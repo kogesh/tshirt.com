@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Register</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb);
+            overflow: hidden;
+        }
+        .container {
+            background: linear-gradient(135deg, #ffffff, #e3f2fd);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            border: 2px solid #007BFF;
+        }
+        .shop-name {
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff5722;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: #007BFF;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input {
+            margin-bottom: 15px;
+            padding: 12px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        input:focus {
+            border-color: #ff5722;
+            outline: none;
+        }
+        button {
+            padding: 12px;
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #0056b3, #003f7f);
+        }
+        .toggle {
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+            color: #007BFF;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .sticker {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: float 6s ease-in-out infinite;
+        }
+        .sticker:nth-child(1) {
+            top: 10%;
+            left: 20%;
+            background-image: url('tshirt1.png');
+            animation-delay: 0s;
+        }
+        .sticker:nth-child(2) {
+            top: 30%;
+            left: 70%;
+            background-image: url('tshirt2.png');
+            animation-delay: 1s;
+        }
+        .sticker:nth-child(3) {
+            top: 60%;
+            left: 40%;
+            background-image: url('tshirt3.png');
+            animation-delay: 2s;
+        }
+        .sticker:nth-child(4) {
+            top: 80%;
+            left: 10%;
+            background-image: url('tshirt4.png');
+            animation-delay: 3s;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .fountain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: transparent;
+            border-radius: 50%;
+            animation: rise 4s ease-in-out infinite, drift 4s ease-in-out infinite, blast 4s ease-in-out infinite;
+        }
+        .particle:nth-child(odd) {
+            background-color: #ff5722;
+        }
+        .particle:nth-child(even) {
+            background-color: #007BFF;
+        }
+        @keyframes rise {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+        @keyframes drift {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+            100% {
+                transform: translateX(-20px);
+            }
+        }
+        @keyframes blast {
+            0% {
+                transform: scale(0.5) translate(0, 0);
+            }
+            50% {
+                transform: scale(1.5) translate(50px, -50px);
+            }
+            100% {
+                transform: scale(1) translate(-50px, 50px);
+            }
+        }
+        .falling-smiles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .smile {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('home.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: fall 5s linear infinite, sway 3s ease-in-out infinite;
+        }
+        .smile:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+        .smile:nth-child(even) {
+            animation-delay: 1s;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        @keyframes sway {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(20px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sticker"></div>
+    <div class="sticker"></div>
+    <div class="sticker"></div>
+    <div class="sticker"></div>
+    <div class="fountain">
+        <!-- Generate particles -->
+        <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; animation-delay: 0.5s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 40%; animation-delay: 1.5s;"></div>
+        <div class="particle" style="left: 50%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 80%; animation-delay: 3.5s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 4s;"></div>
+    </div>
+    <div class="falling-smiles">
+        <!-- Generate smile stickers -->
+        <div class="smile" style="left: 10%;"></div>
+        <div class="smile" style="left: 20%;"></div>
+        <div class="smile" style="left: 30%;"></div>
+        <div class="smile" style="left: 40%;"></div>
+        <div class="smile" style="left: 50%;"></div>
+        <div class="smile" style="left: 60%;"></div>
+        <div class="smile" style="left: 70%;"></div>
+        <div class="smile" style="left: 80%;"></div>
+        <div class="smile" style="left: 90%;"></div>
+    </div>
+    <div class="container">
+        <div class="shop-name">Your Shop Name</div>
+        <h2 id="form-title">Login</h2>
+        <form id="auth-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="success-message" style="display: none; color: green; text-align: center; margin-top: 10px;">Login Successfully!</p>
+        <div class="toggle" id="toggle-form">Don't have an account? Register</div>
+    </div>
+
+    <script>
+        // Toggle between Login and Register forms
+        const formTitle = document.getElementById('form-title');
+        const toggleForm = document.getElementById('toggle-form');
+        const authForm = document.getElementById('auth-form');
+
+        toggleForm.addEventListener('click', () => {
+            if (formTitle.textContent === 'Login') {
+                formTitle.textContent = 'Register';
+                toggleForm.textContent = 'Already have an account? Login';
+                authForm.innerHTML = `
+                    <input type="text" id="first-name" placeholder="First Name" required>
+                    <input type="text" id="last-name" placeholder="Last Name" required>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Register</button>
+                `;
+            } else {
+                formTitle.textContent = 'Login';
+                toggleForm.textContent = "Don't have an account? Register";
+                authForm.innerHTML = `
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Submit</button>
+                `;
+            }
+        });
+
+        // Handle form submission
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (formTitle.textContent === 'Register') {
+                // Store user data in localStorage
+                const firstName = document.getElementById('first-name').value;
+                const lastName = document.getElementById('last-name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                const userData = { firstName, lastName, email, password };
+                localStorage.setItem('userData', JSON.stringify(userData));
+
+                alert('Registered Successfully!');
+                // Reset to login form
+                formTitle.textContent = 'Login';
+                toggleForm.textContent = "Don't have an account? Register";
+                authForm.innerHTML = `
+                    <input type="email" id="email" placeholder="Email" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Submit</button>
+                `;
+            } else {
+                // Login validation
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const storedUserData = JSON.parse(localStorage.getItem('userData'));
+
+                if (storedUserData && storedUserData.email === email && storedUserData.password === password) {
+                    const successMessage = document.getElementById('success-message');
+                    successMessage.style.display = 'block'; // Show success message
+                    setTimeout(() => {
+                        // Redirect to home page with user data
+                        window.location.href = `home.html?firstName=${storedUserData.firstName}&lastName=${storedUserData.lastName}&email=${storedUserData.email}`;
+                    }, 2000);
+                } else {
+                    alert('Invalid email or password!');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
